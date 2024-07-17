@@ -21,12 +21,13 @@ public class CustomList<T>:IEnumerable<T>
     }
     public int Count { get; set; }
     public int Capacity { get; set; }
+    
     public void Add(T item)
     {
         if (Capacity == 0)
         {
             Capacity = 4;
-            arr = new T[Capacity];
+            Array.Resize(ref arr, Capacity);
             arr[0] = item;
             Count++;
         }
@@ -38,7 +39,7 @@ public class CustomList<T>:IEnumerable<T>
         else
         {
             Capacity *= 2;
-            arr = new T[Capacity];
+            Array.Resize(ref arr, Capacity);
             arr[Count]=item;
             Count++;
         }
@@ -75,6 +76,7 @@ public class CustomList<T>:IEnumerable<T>
                 }
                 arr[Count-1] = default(T);
                 Count--;
+                
                 return true;
             }
         }
@@ -83,15 +85,21 @@ public class CustomList<T>:IEnumerable<T>
     public int RemoveAll(Predicate<T> predicate)
     {
         int count = 0;
-        foreach(T item in arr)
+        for (int i = 0; i < arr.Length; i++)
         {
-            if (predicate(item))
+            if (predicate(arr[i]))
             {
-                Remove(item);
+                for (int j = i; j < arr.Length - 1; j++)
+                {
+                    arr[j] = arr[j + 1];
+                }
+                arr[Count - 1] = default(T);
+                Count--;
                 count++;
+                i--;
             }
         }
-        return count;
+                return count;
     }
     public IEnumerator<T> GetEnumerator()
     {
