@@ -10,7 +10,7 @@
             list.Add(3);
             list.Add(4);
             list.Remove(3);
-            foreach(int i in list)
+            foreach (int i in list)
             {
                 Console.WriteLine(i);
             }

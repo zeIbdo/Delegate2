@@ -103,9 +103,9 @@ public class CustomList<T>:IEnumerable<T>
     }
     public IEnumerator<T> GetEnumerator()
     {
-        foreach(var item in arr)
+        for (int i = 0; i < Count; i++)
         {
-            yield return item;
+            yield return arr[i];
         }
     }
 
